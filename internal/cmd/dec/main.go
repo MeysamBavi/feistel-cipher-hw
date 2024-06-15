@@ -1,11 +1,11 @@
 package dec
 
 import (
-	"crypto/aes"
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"github.com/MeysamBavi/feistel-cipher-hw/internal/crypt"
+	"github.com/MeysamBavi/feistel-cipher-hw/pkg/fch"
 	"github.com/spf13/cobra"
 	"io"
 	"os"
@@ -26,7 +26,7 @@ func main(key string) error {
 	if err != nil {
 		return err
 	}
-	block, err := aes.NewCipher(k)
+	block, err := fch.NewCipher(k)
 	if err != nil {
 		return err
 	}
@@ -34,7 +34,7 @@ func main(key string) error {
 	if err != nil {
 		return err
 	}
-	data := make([]byte, base64.StdEncoding.DecodedLen(len(dataBase64)))
+	data := make([]byte, base64.URLEncoding.DecodedLen(len(dataBase64)))
 	n, err := base64.URLEncoding.Decode(data, dataBase64)
 	if err != nil {
 		return err
