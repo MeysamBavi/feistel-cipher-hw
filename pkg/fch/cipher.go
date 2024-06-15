@@ -76,9 +76,10 @@ func (c impl) passThroughRounds(data []byte, reverse bool) {
 }
 
 func init() {
-	ip = rand.Perm(128)
-	keyPerm = rand.Perm(64)
-	sBox = rand.Perm(256)
+	r := rand.New(rand.NewSource(0))
+	ip = r.Perm(128)
+	keyPerm = r.Perm(64)
+	sBox = r.Perm(256)
 }
 
 var ip []int
