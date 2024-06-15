@@ -1,7 +1,6 @@
 package crypt
 
 import (
-	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
 	"fmt"
@@ -24,8 +23,8 @@ func Encrypt(block cipher.Block, plainText []byte) ([]byte, error) {
 }
 
 func Decrypt(block cipher.Block, cipherText []byte) ([]byte, error) {
-	if len(cipherText) == 0 || len(cipherText)%aes.BlockSize != 0 {
-		return nil, fmt.Errorf("cipherText is not a multiple of the block size")
+	if len(cipherText) == 0 || len(cipherText)%block.BlockSize() != 0 {
+		return nil, fmt.Errorf("cipher text is not a multiple of the block size")
 	}
 
 	ivLen := block.BlockSize()
