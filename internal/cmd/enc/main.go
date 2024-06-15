@@ -38,6 +38,6 @@ func main(key string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(base64.StdEncoding.EncodeToString(encrypted))
+	fmt.Println(base64.URLEncoding.EncodeToString(encrypted))
 	return nil
 }

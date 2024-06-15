@@ -35,7 +35,7 @@ func main(key string) error {
 		return err
 	}
 	data := make([]byte, base64.StdEncoding.DecodedLen(len(dataBase64)))
-	n, err := base64.StdEncoding.Decode(data, dataBase64)
+	n, err := base64.URLEncoding.Decode(data, dataBase64)
 	if err != nil {
 		return err
 	}
