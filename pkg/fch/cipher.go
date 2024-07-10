@@ -58,7 +58,7 @@ func (c impl) Decrypt(dst, src []byte) {
 }
 
 func (c impl) passThroughRounds(data []byte, reverse bool) {
-	permuteBytes(data, ip, reverse)
+	permuteBytes(data, ip, false)
 	l := binary.BigEndian.Uint64(data[:BlockSize/2])
 	r := binary.BigEndian.Uint64(data[BlockSize/2:])
 
@@ -72,7 +72,7 @@ func (c impl) passThroughRounds(data []byte, reverse bool) {
 	data = data[:0]
 	data = binary.BigEndian.AppendUint64(data, l)
 	data = binary.BigEndian.AppendUint64(data, r)
-	permuteBytes(data, ip, !reverse)
+	permuteBytes(data, ip, true)
 }
 
 func init() {
@@ -109,6 +109,7 @@ func permuteBytes(data []byte, p []int, reverse bool) {
 		d := (data[len(data)-1-i/8] >> (i % 8)) & 1
 		result[len(data)-1-shift/8] |= d << (shift % 8)
 	}
+	copy(data, result)
 }
 
 func scheduleKeys(keyBytes []byte, reverse bool) []uint32 {
